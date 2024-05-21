@@ -46,3 +46,13 @@ export function getQuantity(){
     });
     return total;
 }
+
+export function updateItemQuantity(productId,quantity){
+    cart.forEach((item)=>{
+        if(item.id===productId){
+            item.quantity=quantity;
+            return;
+        }
+    })
+    saveToStorage();
+}
