@@ -21,7 +21,7 @@ function renderPaymentSummary(){
         totalPrice+=item.quantity*matchingProduct.priceCents
         deliveryOptions.forEach((option)=>{
             if (item.deliveryOptionId===option.id){
-                shippingCost=option.priceCents;
+                shippingCost+=option.priceCents;
             }
         });
     });
