@@ -1,9 +1,9 @@
 import { cart,removeFromCart,getQuantity,updateItemQuantity,updateDeliveryOptionId } from '../../data/cart.js';
 import { products } from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js';
+import { deliveryOptions,dateCalculate } from '../../data/deliveryOptions.js';
 import renderPaymentSummary from './paymentSummary.js';
+import renderCheckoutHeader from './checkoutHeader.js';
 
 function renderOrderSummary(){
     let cartSummaryHTML = '';
@@ -71,13 +71,6 @@ function renderOrderSummary(){
         }
     );
 
-    function dateCalculate(option){
-        let today=dayjs();
-        const deliveryDate=today.add(option.deliveryDays,'day');
-        const dateString=deliveryDate.format('dddd, MMMM D');
-        return dateString;
-    }
-
     document.querySelector('.order-summary').innerHTML=cartSummaryHTML;
 
     document.querySelectorAll('.delete-quantity-link').forEach(
@@ -86,8 +79,8 @@ function renderOrderSummary(){
                 const productId = link.dataset.productId;
                 removeFromCart(productId);
                 const container=document.querySelector(`.js-cart-item-container-${productId}`);
-                container.remove();
-                updateCartQuantity();
+                renderCheckoutHeader();
+                renderOrderSummary();
                 renderPaymentSummary();
             })
         }
@@ -117,7 +110,7 @@ function renderOrderSummary(){
                     input.classList.add('invisible');
                     quantityLabel.classList.remove('invisible');
                     link.classList.remove('invisible');
-                    updateCartQuantity();
+                    renderCheckoutHeader();
                     renderPaymentSummary();
                 });
                 quantityLabel.classList.add('invisible');
@@ -127,11 +120,6 @@ function renderOrderSummary(){
             })
         }
     )
-
-    function updateCartQuantity(){
-        document.querySelector('.return-to-home-link').innerHTML=`${getQuantity()} items`;
-    }
-    updateCartQuantity();
 
     function deliveryOptionsHTML(matchingProduct,item){
         let html = '';
