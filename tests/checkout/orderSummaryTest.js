@@ -19,7 +19,7 @@ describe('test suite: renderOrderSummary',()=>{
             },{
                 id: productId2,
                 quantity: 1,
-                deliveryOptionId: '1'
+                deliveryOptionId: '2'
             }]);
         });
         loadFromStorage();
@@ -30,6 +30,11 @@ describe('test suite: renderOrderSummary',()=>{
         expect(document.querySelectorAll('.js-cart-item-container').length).toEqual(2);
         expect(document.querySelector(`.js-product-quantity-${productId1}`).innerText).toContain('Quantity: 2'); //Checks if the string 'Quantity: 2' is present in the innerText of the element
         expect(document.querySelector(`.js-product-quantity-${productId2}`).innerText).toContain('Quantity: 1');
+        expect(document.querySelector(`.js-product-name-${productId1}`).innerText).toContain(' ');
+        expect(document.querySelector(`.js-product-name-${productId2}`).innerText).toContain(' ');
+        document.querySelectorAll('.product-price').forEach((price)=>{
+            expect(price.innerText).toContain('$');
+        });
     })
     it('removes a product',()=>{
         document.querySelector(`.js-delete-quantity-link-${productId1}`).click();
@@ -38,9 +43,20 @@ describe('test suite: renderOrderSummary',()=>{
         expect(document.querySelector(`.js-cart-item-container-${productId2}`)).not.toEqual(null);
         expect(cart.length).toEqual(1);
         expect(cart[0].id).toEqual(productId2);
+        expect(document.querySelector(`.js-product-name-${productId2}`).innerText).toContain(' ');
     })
-    
-    afterAll(()=>{
+    it('update product\'s delivery option via Button',()=>{
+        document.querySelector(`.js-delivery-option-${productId1}-3`).click();
+        expect(cart[0].deliveryOptionId).toEqual('3');
+        expect(document.querySelector(`.js-delivery-option-input-${productId1}-3`).checked).toBe(true);
+        expect(cart.length).toEqual(2);
+        expect(cart[0].id).toEqual(productId1);
+        expect(cart[0].deliveryOptionId).toEqual('3');
+        expect(document.querySelector('.js-shipping-cost').innerHTML).toEqual('$14.98');
+        expect(document.querySelector('.js-order-total').innerHTML).toEqual('$63.50');
+    });
+
+    afterEach(()=>{
         document.querySelector('.js-test-container').innerHTML=``;
     })
 });
