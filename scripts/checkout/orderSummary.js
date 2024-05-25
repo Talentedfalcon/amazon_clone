@@ -29,7 +29,9 @@ function renderOrderSummary(){
             })
 
             cartSummaryHTML+=`
-                    <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+                    <div class="cart-item-container 
+                        js-cart-item-container 
+                        js-cart-item-container-${matchingProduct.id}">
                         <div class="delivery-date">
                             Delivery date: ${dateCalculate(deliveryOption)}
                         </div>
@@ -45,7 +47,8 @@ function renderOrderSummary(){
                             <div class="product-price">
                                 $${formatCurrency(matchingProduct.priceCents)}
                             </div>
-                            <div class="product-quantity">
+                            <div class="product-quantity
+                                js-product-quantity-${matchingProduct.id}">
                                 <span>
                                 Quantity: <span class="quantity-label">${item.quantity}</span>
                                 </span>
@@ -54,7 +57,10 @@ function renderOrderSummary(){
                                 </span>
                                 <input class="quantity-input invisible"/>
                                 <span class="save-quantity-link link-primary invisible">Save</span>
-                                <span class="delete-quantity-link link-primary" data-product-id="${matchingProduct.id}">
+                                <span class="delete-quantity-link 
+                                    link-primary
+                                    js-delete-quantity-link-${matchingProduct.id}" 
+                                    data-product-id="${matchingProduct.id}">
                                 Delete
                                 </span>
                             </div>
