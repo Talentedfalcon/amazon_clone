@@ -1,4 +1,4 @@
-import { cart,removeFromCart,getQuantity,updateItemQuantity,updateDeliveryOptionId } from '../../data/cart.js';
+import { cart,removeFromCart,updateItemQuantity,updateDeliveryOptionId } from '../../data/cart.js';
 import { products } from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
 import { deliveryOptions,dateCalculate } from '../../data/deliveryOptions.js';
@@ -85,7 +85,6 @@ function renderOrderSummary(){
             link.addEventListener('click',()=>{
                 const productId = link.dataset.productId;
                 removeFromCart(productId);
-                const container=document.querySelector(`.js-cart-item-container-${productId}`);
                 renderCheckoutHeader();
                 renderOrderSummary();
                 renderPaymentSummary();
