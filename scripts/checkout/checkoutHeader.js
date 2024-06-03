@@ -1,10 +1,12 @@
-import { getQuantity } from "../../data/cart.js";
+import { Cart } from "../../data/cart-class.js";
 
-function renderCheckoutHeader(){
+function renderCheckoutHeader(localStorageKey){
+    const cart=new Cart(localStorageKey);
+
     const headerMiddle=document.querySelector('.checkout-header-middle-section');
     const headerMiddleHTML=`
             Checkout (<a class="return-to-home-link"
-            href="amazon.html">${getQuantity()} items</a>)`
+            href="amazon.html">${cart.getQuantity()} items</a>)`
     headerMiddle.innerHTML=headerMiddleHTML;    
 }
 

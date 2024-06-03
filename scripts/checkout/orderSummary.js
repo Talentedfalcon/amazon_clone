@@ -1,14 +1,16 @@
-import { cart,removeFromCart,updateItemQuantity,updateDeliveryOptionId } from '../../data/cart.js';
+import { Cart } from '../../data/cart-class.js';
 import { products } from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
 import { deliveryOptions,dateCalculate } from '../../data/deliveryOptions.js';
 import renderPaymentSummary from './paymentSummary.js';
 import renderCheckoutHeader from './checkoutHeader.js';
 
-function renderOrderSummary(){
+function renderOrderSummary(localStorageKey){
+    const cart=new Cart(localStorageKey);
+
     let cartSummaryHTML = '';
 
-    cart.forEach(
+    cart.cartItems.forEach(
         (item)=>{
             const productId=item.id;
             let matchingProduct;
@@ -84,10 +86,10 @@ function renderOrderSummary(){
         (link)=>{
             link.addEventListener('click',()=>{
                 const productId = link.dataset.productId;
-                removeFromCart(productId);
-                renderCheckoutHeader();
-                renderOrderSummary();
-                renderPaymentSummary();
+                cart.removeFromCart(productId);
+                renderCheckoutHeader(localStorageKey);
+                renderOrderSummary(localStorageKey);
+                renderPaymentSummary(localStorageKey);
             })
         }
     )
@@ -104,20 +106,20 @@ function renderOrderSummary(){
                     if(event.key==='Enter'){
                         updateButton.click();
                     }
-                    renderPaymentSummary();
+                    renderPaymentSummary(localStorageKey);
                 })
                 updateButton.addEventListener('click',()=>{
                     if(Number(input.value)===0){
                         document.querySelector(`.js-cart-item-container-${productId} .delete-quantity-link`).click();
                     }
-                    updateItemQuantity(productId,Number(input.value));
+                    cart.updateItemQuantity(productId,Number(input.value));
                     quantityLabel.innerHTML=Number(input.value);
                     updateButton.classList.add('invisible');
                     input.classList.add('invisible');
                     quantityLabel.classList.remove('invisible');
                     link.classList.remove('invisible');
-                    renderCheckoutHeader();
-                    renderPaymentSummary();
+                    renderCheckoutHeader(localStorageKey);
+                    renderPaymentSummary(localStorageKey);
                 });
                 quantityLabel.classList.add('invisible');
                 link.classList.add('invisible');
@@ -161,9 +163,9 @@ function renderOrderSummary(){
     document.querySelectorAll('.js-delivery-option').forEach((element)=>{
         element.addEventListener('click',()=>{
             const { productId,deliveryOptionId } = element.dataset;
-            updateDeliveryOptionId(productId,deliveryOptionId);
-            renderOrderSummary();
-            renderPaymentSummary();
+            cart.updateDeliveryOptionId(productId,deliveryOptionId);
+            renderOrderSummary(localStorageKey);
+            renderPaymentSummary(localStorageKey);
         });
     });
 }

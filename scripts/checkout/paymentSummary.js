@@ -1,16 +1,18 @@
-import { cart } from "../../data/cart.js";
+import { Cart } from "../../data/cart-class.js";
 import { products } from "../../data/products.js";
 import { deliveryOptions } from "../../data/deliveryOptions.js";
 import formatCurrency from "../utils/money.js";
 
-function renderPaymentSummary(){
+function renderPaymentSummary(localStorageKey){
+    const cart=new Cart(localStorageKey);
+    
     let totalItems=0;
     let totalPrice=0;
     let shippingCost=0;
     let estimatedTax=0;
     let orderTotal=0;
 
-    cart.forEach((item) => {
+    cart.cartItems.forEach((item) => {
         let matchingProduct;
         totalItems+=item.quantity;
         products.forEach((product)=>{
