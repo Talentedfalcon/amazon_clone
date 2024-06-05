@@ -1,5 +1,5 @@
 import {Cart} from '../../data/cart-class.js'
-import { loadProducts } from '../../data/products.js';
+import { loadProductsFetch } from '../../data/products.js';
 import renderOrderSummary from "../../scripts/checkout/orderSummary.js";
 
 describe('test suite: renderOrderSummary',()=>{
@@ -11,7 +11,7 @@ describe('test suite: renderOrderSummary',()=>{
     }
 
     beforeAll((done)=>{
-        loadProducts(()=>{
+        loadProductsFetch().then(()=>{
             done();
         });
     });

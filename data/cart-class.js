@@ -94,7 +94,7 @@ export class Cart{
     };
 };
 
-export function loadCart(fun){
+export function test_loadCart(fun){
     const xhr = new XMLHttpRequest();
   
     xhr.addEventListener('load',()=>{
@@ -104,4 +104,4 @@ export function loadCart(fun){
   
     xhr.open('GET','https://supersimplebackend.dev/cart');
     xhr.send();
-  }
+}
