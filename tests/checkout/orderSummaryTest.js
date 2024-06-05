@@ -1,4 +1,5 @@
 import {Cart} from '../../data/cart-class.js'
+import { loadProducts } from '../../data/products.js';
 import renderOrderSummary from "../../scripts/checkout/orderSummary.js";
 
 describe('test suite: renderOrderSummary',()=>{
@@ -8,6 +9,13 @@ describe('test suite: renderOrderSummary',()=>{
     function refreshCart(){
         cart=new Cart('test-cart');
     }
+
+    beforeAll((done)=>{
+        loadProducts(()=>{
+            done();
+        });
+    });
+
     beforeEach(()=>{
         document.querySelector('.js-test-container').innerHTML=`
             <div class="checkout-header-middle-section"></div>
