@@ -4,41 +4,59 @@ import renderCheckoutHeader from "./checkout/checkoutHeader.js";
 import { loadProductsFetch } from "../data/products.js";
 import { test_loadCart } from "../data/cart-class.js";
 
-Promise.all([
-    loadProductsFetch(),
-    new Promise((resolve)=>{
+async function loadPage(){
+    await loadProductsFetch();
+    await new Promise((resolve)=>{
         test_loadCart(()=>{
             resolve();
         });
     })
-]).then(()=>{
     renderCheckoutHeader('cart');
     renderOrderSummary('cart');
     renderPaymentSummary('cart');
-});
+}
 
-/*new Promise((resolve)=>{
-    loadProducts(()=>{
-        resolve('value1');
+loadPage();
+
+/*
+    Promise.all([
+        loadProductsFetch(),
+        new Promise((resolve)=>{
+            test_loadCart(()=>{
+                resolve();
+            });
+        })
+    ]).then(()=>{
+        renderCheckoutHeader('cart');
+        renderOrderSummary('cart');
+        renderPaymentSummary('cart');
     });
-}).then((value)=>{
-    console.log(value);
-    return new Promise((resolve)=>{
-        loadCart(()=>{
-            resolve('value2');
+*/
+
+/*
+    new Promise((resolve)=>{
+        loadProducts(()=>{
+            resolve('value1');
         });
-    });
-}).then((value)=>{
-    console.log(value);
-    renderCheckoutHeader('cart');
-    renderOrderSummary('cart');
-    renderPaymentSummary('cart');
-})*/
+    }).then((value)=>{
+        console.log(value);
+        return new Promise((resolve)=>{
+            loadCart(()=>{
+                resolve('value2');
+            });
+        });
+    }).then((value)=>{
+        console.log(value);
+        renderCheckoutHeader('cart');
+        renderOrderSummary('cart');
+        renderPaymentSummary('cart');
+    })*/
 
-/*loadProducts(()=>{
-    loadCart(()=>{    
-        renderCheckoutHeader();
-        renderOrderSummary();
-        renderPaymentSummary();
-    });
-})*/
+    /*loadProducts(()=>{
+        loadCart(()=>{    
+            renderCheckoutHeader();
+            renderOrderSummary();
+            renderPaymentSummary();
+        });
+    })
+*/
