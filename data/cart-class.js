@@ -21,7 +21,7 @@ export class Cart{
         let flag=1;
         this.cartItems.forEach(
             (product)=>{
-                if (product.id === productId)
+                if (product.productId === productId)
                 {
                     product.quantity+=Number(productCount);
                     flag = 0;
@@ -32,7 +32,7 @@ export class Cart{
         if(flag)
         {
             this.cartItems.push({
-                id: productId,
+                productId: productId,
                 quantity: Number(productCount),
                 deliveryOptionId: '1'
             });
@@ -44,7 +44,7 @@ export class Cart{
     removeFromCart(productId){
         const newCart=[];
         this.cartItems.forEach((item)=>{
-            if (item.id!==productId){
+            if (item.productId!==productId){
                 newCart.push(item);
             }
         });
@@ -62,7 +62,7 @@ export class Cart{
 
     updateItemQuantity(productId,quantity){
         this.cartItems.forEach((item)=>{
-            if(item.id===productId){
+            if(item.productId===productId){
                 item.quantity=quantity;
                 return;
             }
@@ -82,7 +82,7 @@ export class Cart{
     
         if(isValidOption){
             this.cartItems.forEach((item)=>{
-                if(item.id === productId){
+                if(item.productId === productId){
                     item.deliveryOptionId=deliveryOptionId;
                     isUpdated=true;
                 }

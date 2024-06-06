@@ -12,7 +12,7 @@ function renderOrderSummary(localStorageKey){
 
     cart.cartItems.forEach(
         (item)=>{
-            const productId=item.id;
+            const productId=item.productId;
             let matchingProduct;
             products.forEach((product)=>{
                 if(product.id===productId)

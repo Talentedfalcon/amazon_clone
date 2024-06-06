@@ -23,11 +23,11 @@ describe('test suite: renderOrderSummary',()=>{
             <div class="payment-summary"></div>
         `;
         cart.cartItems=[{
-                id: productId1,
+                productId: productId1,
                 quantity: 2,
                 deliveryOptionId: '2'
             },{
-                id: productId2,
+                productId: productId2,
                 quantity: 1,
                 deliveryOptionId: '2'
             }];
@@ -52,7 +52,7 @@ describe('test suite: renderOrderSummary',()=>{
         expect(document.querySelector(`.js-cart-item-container-${productId1}`)).toEqual(null);
         expect(document.querySelector(`.js-cart-item-container-${productId2}`)).not.toEqual(null);
         expect(cart.cartItems.length).toEqual(1);
-        expect(cart.cartItems[0].id).toEqual(productId2);
+        expect(cart.cartItems[0].productId).toEqual(productId2);
         expect(document.querySelector(`.js-product-name-${productId2}`).innerText).toContain(' ');
     })
     it('update product\'s delivery option via Button',()=>{
@@ -61,7 +61,7 @@ describe('test suite: renderOrderSummary',()=>{
         expect(cart.cartItems[0].deliveryOptionId).toEqual('3');
         expect(document.querySelector(`.js-delivery-option-input-${productId1}-3`).checked).toBe(true);
         expect(cart.cartItems.length).toEqual(2);
-        expect(cart.cartItems[0].id).toEqual(productId1);
+        expect(cart.cartItems[0].productId).toEqual(productId1);
         expect(cart.cartItems[0].deliveryOptionId).toEqual('3');
         expect(document.querySelector('.js-shipping-cost').innerHTML).toEqual('$14.98');
         expect(document.querySelector('.js-order-total').innerHTML).toEqual('$63.50');

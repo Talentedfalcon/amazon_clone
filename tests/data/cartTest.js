@@ -8,19 +8,19 @@ describe('test suite: addToCart',()=>{
     })
     it('adds an existing product to the cart',()=>{
         cart.cartItems=[{
-            id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+            productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
             quantity: 1,
             deliveryOptionId: '1'
         }];
         cart.addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6',1);
         expect(cart.cartItems.length).toEqual(1);
         expect(localStorage.setItem).toHaveBeenCalledTimes(1);      //Check if .setItem is called once
-        expect(cart.cartItems[0].id).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+        expect(cart.cartItems[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
         expect(cart.cartItems[0].quantity).toEqual(2);
         expect(localStorage.setItem).toHaveBeenCalledWith(
             'test-cart',
             JSON.stringify([{
-                id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+                productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
                 quantity: 2,
                 deliveryOptionId: '1'
             }]));
@@ -30,12 +30,12 @@ describe('test suite: addToCart',()=>{
         cart.addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6',1);
         expect(cart.cartItems.length).toEqual(1);
         expect(localStorage.setItem).toHaveBeenCalledTimes(1);      //Check if .setItem is called once
-        expect(cart.cartItems[0].id).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
+        expect(cart.cartItems[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
         expect(cart.cartItems[0].quantity).toEqual(1);
         expect(localStorage.setItem).toHaveBeenCalledWith(
             'test-cart',
             JSON.stringify([{
-                id: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+                productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
                 quantity: 1,
                 deliveryOptionId: '1'
             }])
@@ -49,7 +49,7 @@ describe('test suite: removeFromCart',()=>{
     beforeEach(()=>{              
         spyOn(localStorage,'setItem');   //Mocks localStorage.setItem and doesn't initiate the actual function
         cart.cartItems=[{
-            id: productId,
+            productId: productId,
             quantity: 1,
             deliveryOptionId: '1'
         }];
@@ -70,7 +70,7 @@ describe('test suite: removeFromCart',()=>{
         expect(localStorage.setItem).toHaveBeenCalledWith(
             'test-cart',
             JSON.stringify([{
-                id: productId,
+                productId: productId,
                 quantity: 1,
                 deliveryOptionId: '1'
             }])
@@ -84,7 +84,7 @@ describe('test suite: updateDeliveryOption',()=>{
     beforeEach(()=>{
         spyOn(localStorage,'setItem');   //Mocks localStorage.setItem and doesn't initiate the actual function
         cart.cartItems=[{
-            id: productId,
+            productId: productId,
             quantity: 1,
             deliveryOptionId: '1'
         }];
