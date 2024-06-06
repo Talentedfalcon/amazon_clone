@@ -101,6 +101,11 @@ export function test_loadCart(fun){
       console.log(xhr.response);
       fun();
     })
+
+    xhr.addEventListener('error',(error)=>{
+        console.log('Unexpected error. Please try again later');
+        console.log(error);
+    });
   
     xhr.open('GET','https://supersimplebackend.dev/cart');
     xhr.send();
