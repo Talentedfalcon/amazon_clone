@@ -10,10 +10,8 @@ describe('test suite: renderOrderSummary',()=>{
         cart=new Cart('test-cart');
     }
 
-    beforeAll((done)=>{
-        loadProductsFetch().then(()=>{
-            done();
-        });
+    beforeAll(async()=>{
+        await loadProductsFetch();
     });
 
     beforeEach(()=>{

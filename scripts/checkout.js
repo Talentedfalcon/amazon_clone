@@ -2,19 +2,19 @@ import renderOrderSummary from "./checkout/orderSummary.js";
 import renderPaymentSummary from "./checkout/paymentSummary.js";
 import renderCheckoutHeader from "./checkout/checkoutHeader.js";
 import { loadProductsFetch } from "../data/products.js";
-import { test_loadCart } from "../data/cart-class.js";
+import { loadCartFetch } from "../data/cart-class.js";
 
 async function loadPage(){
     try{
-        //throw 'error1';
-        await loadProductsFetch();
-        await new Promise((resolve,reject)=>{
-            // throw 'error2';
-            test_loadCart(()=>{
-                // reject('error3');
-                resolve();
-            });
-    })
+        // await loadProductsFetch();
+        // await new Promise((resolve)=>{
+        //     loadCartFetch();
+        //     resolve();
+        // });
+        await Promise.all([
+            loadProductsFetch(),
+            loadCartFetch()
+        ]);
     }
     catch(error){
         console.log('Unexpected error. Please try again later');
