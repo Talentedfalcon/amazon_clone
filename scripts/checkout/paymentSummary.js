@@ -79,14 +79,17 @@ function renderPaymentSummary(localStorageKey){
                     cart: cart.cartItems
                 })
             });
-
+            if(response.status >=400){
+                throw response
+            }
             const order = await response.json();
             addOrder(order);
+            localStorage.removeItem(localStorageKey);
+            window.location.href='orders.html';
         }
         catch(error){
             console.log('Unexpected error. Try again later.');    
         }
-        window.location.href='orders.html';
     });
 }
 
