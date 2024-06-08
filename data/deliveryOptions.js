@@ -17,12 +17,12 @@ export const deliveryOptions=[{
 export function dateCalculate(option){
     let today=dayjs();
     let deliveryDate=today.add(option.deliveryDays,'day');
-    if(deliveryDate.format('ddd')==='Sat'){
-        deliveryDate=deliveryDate.add(2,'day');
-    }
-    else if(deliveryDate.format('ddd')==='Sun'){
-        deliveryDate=deliveryDate.add(1,'day');
-    }
+    // if(deliveryDate.format('ddd')==='Sat'){
+    //     deliveryDate=deliveryDate.add(2,'day');
+    // }
+    // else if(deliveryDate.format('ddd')==='Sun'){
+    //     deliveryDate=deliveryDate.add(1,'day');
+    // }
     const dateString=deliveryDate.format('dddd, MMMM D');
     return dateString;
 }
