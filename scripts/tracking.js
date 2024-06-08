@@ -1,10 +1,18 @@
 import { orders } from "../data/orders.js"
 import { products,loadProductsFetch } from "../data/products.js"
+import { Cart } from "../data/cart-class.js";
 import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js"
+
+const cart = new Cart('cart');
 
 loadProductsFetch().then(()=>{
     renderTracking();
+    renderCartQuantity();
 });
+
+function renderCartQuantity(){
+    document.querySelector('.cart-quantity').innerText=cart.getQuantity();
+}
 
 function renderTracking(){
     const url=new URL(window.location);
