@@ -3,14 +3,59 @@ import { products,loadProductsFetch } from '../data/products.js';
 
 const cart=new Cart('cart');
 
+let filteredProducts;
+
 loadProductsFetch().then(()=>{
+    filteredProducts=products;
     renderProductsGrid();
 });
+
+document.querySelector('.search-button').addEventListener('click',handleURLSearchParam);
+document.querySelector('.search-bar').addEventListener('keydown',(event)=>{
+    handleURLSearchParam();
+})
+
+function handleURLSearchParam(){
+    const search=document.querySelector('.search-bar').value.toLowerCase();
+    const url=new URL(window.location.href);
+    if(search===''){
+        url.searchParams.delete('search');
+    }
+    else{
+        url.searchParams.set('search',search);
+    }
+    window.history.pushState({},'',url);
+    handleSearch();
+}
+
+function handleSearch(){
+    filteredProducts=[]
+    const url=new URL(window.location.href);
+    const search=url.searchParams.get('search');
+    if(search===null){
+        filteredProducts=products
+    }
+    else{
+        products.forEach((product)=>{
+            if((product.name.toLowerCase()).includes(search)){
+                filteredProducts.push(product);
+            }
+            else{
+                product.keywords.forEach((keyword)=>{
+                    if(keyword.toLowerCase().includes(search)){
+                        filteredProducts.push(product);
+                    }
+                });
+            }
+        });
+    }
+    renderProductsGrid();
+}
 
 function renderProductsGrid(){
     let productsHTML='';
 
-    products.forEach((product)=>{
+    filteredProducts.forEach((product)=>{
         productsHTML+=`
             <div class="product-container">
                 <div class="product-image-container">
